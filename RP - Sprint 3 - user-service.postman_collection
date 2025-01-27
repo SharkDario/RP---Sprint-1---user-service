@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "287329fa-f260-4464-9e76-527b1d61ee5b",
-		"name": "RP - Sprint 1 - user-service",
+		"name": "RP - Sprint 3 - user-service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "40829075"
 	},
@@ -12,12 +12,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8081/api/user/exists/{userId}",
+					"raw": "http://localhost:8080/api/user/exists/{userId}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "8080",
 					"path": [
 						"api",
 						"user",
@@ -34,12 +34,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8081/api/user/profile/{email}",
+					"raw": "http://localhost:8080/api/user/profile/{email}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "8080",
 					"path": [
 						"api",
 						"user",
@@ -65,12 +65,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8081/api/user/profile/{id}",
+					"raw": "http://localhost:8080/api/user/profile/{id}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "8080",
 					"path": [
 						"api",
 						"user",
@@ -87,12 +87,12 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8081/api/user/delete/{id}",
+					"raw": "http://localhost:8080/api/user/delete/{id}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "8080",
 					"path": [
 						"api",
 						"user",
@@ -118,12 +118,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8081/api/admin/admins",
+					"raw": "http://localhost:8080/api/admin/admins",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "8080",
 					"path": [
 						"api",
 						"admin",
@@ -148,12 +148,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8081/api/admin/users",
+					"raw": "http://localhost:8080/api/admin/users",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "8080",
 					"path": [
 						"api",
 						"admin",
@@ -169,12 +169,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8081/api/admin/users",
+					"raw": "http://localhost:8080/api/admin/users",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "8080",
 					"path": [
 						"api",
 						"admin",
@@ -190,12 +190,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8081/api/admin/roles",
+					"raw": "http://localhost:8080/api/admin/roles",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "8080",
 					"path": [
 						"api",
 						"admin",
@@ -211,12 +211,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8081/api/admin/user/{id}",
+					"raw": "http://localhost:8080/api/admin/user/{id}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "8080",
 					"path": [
 						"api",
 						"admin",
@@ -242,12 +242,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8081/api/admin/user/{id}",
+					"raw": "http://localhost:8080/api/admin/user/{id}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "8080",
 					"path": [
 						"api",
 						"admin",
@@ -264,12 +264,12 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8081/api/admin/user/{id}",
+					"raw": "http://localhost:8080/api/admin/user/{id}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "8080",
 					"path": [
 						"api",
 						"admin",

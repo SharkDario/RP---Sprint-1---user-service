@@ -10,7 +10,6 @@ import java.util.Set;
 public class EntityUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE) // Lombok doesn't generate the setter
     private Long id;
 
     @Column(unique = true)
