@@ -60,6 +60,13 @@ public class UserController {
         return ResponseEntity.ok(exists);
     }
 
+    // Endpoint to return the userId by the email
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Long> getByEmail(@PathVariable String email) throws EntityNotFoundException {
+        Long userId = userService.getUserDTOByEmail(email).getId();
+        return ResponseEntity.ok(userId);
+    }
+
     // Get profile by email
     @GetMapping("/profile/{email}")
     public ResponseEntity<?> getProfile(@PathVariable String email) {
