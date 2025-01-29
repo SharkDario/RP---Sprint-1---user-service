@@ -1,12 +1,12 @@
 package com.mindhub.user_service.dtos;
-
 import com.mindhub.user_service.models.RoleType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public record NewUserDTO(
+
+public record NewUserDTO (
         @NotBlank(message = "Username is required")
         @Size(min = 4, max = 10, message = "Username must be between 4 and 10 characters")
         String username,

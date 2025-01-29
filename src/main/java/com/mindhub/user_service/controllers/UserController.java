@@ -5,6 +5,7 @@ import com.mindhub.user_service.dtos.UserDTO;
 import com.mindhub.user_service.services.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,9 @@ public class UserController {
     // From behind generates a constructor and injects the bean for this repository (interface)
     @Autowired
     private UserService userService; // inject the interface directly
+
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
     // Validate errors
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -58,6 +62,13 @@ public class UserController {
     public ResponseEntity<Boolean> existsById(@PathVariable Long userId) {
         boolean exists = userService.existsById(userId);
         return ResponseEntity.ok(exists);
+    }
+
+    // Endpoint to return the userId by the email
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Long> getByEmail(@PathVariable String email) throws EntityNotFoundException {
+        Long userId = userService.getUserDTOByEmail(email).getId();
+        return ResponseEntity.ok(userId);
     }
 
     // Get profile by email

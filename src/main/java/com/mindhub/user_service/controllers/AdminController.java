@@ -1,5 +1,6 @@
 package com.mindhub.user_service.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mindhub.user_service.dtos.NewUserDTO;
 import com.mindhub.user_service.dtos.UpdateUserDTO;
 import com.mindhub.user_service.dtos.UserDTO;
@@ -7,6 +8,7 @@ import com.mindhub.user_service.models.RoleType;
 import com.mindhub.user_service.services.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+// Producer
 // We use DTO to receive and send in controllers
 @RestController
 @RequestMapping("/api/admin")
@@ -27,6 +29,14 @@ public class AdminController {
     // From behind generates a constructor and injects the bean for this repository (interface)
     @Autowired
     private UserService userService; // inject the interface directly
+
+    // Inject the AmqpTemplate bean to send messages to RabbitMQ
+    // user-service is the Producer/Publisher
+    @Autowired
+    private AmqpTemplate amqpTemplate;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     // Validate errors
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -89,6 +99,10 @@ public class AdminController {
     @PostMapping("/users")
     public ResponseEntity<?> createUser(@Valid @RequestBody NewUserDTO newUser) {
         userService.registerUser(newUser);
+        // Send a message to RabbitMQ using the AmqpTemplate
+        // The message is sent to the "testingExchange" with the routing key "routingUserRegister.key"
+        // The payload of the message is the newUser object
+        amqpTemplate.convertAndSend("testingExchange", "routingUserRegister.key", newUser);
         return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
     }
 
@@ -96,12 +110,18 @@ public class AdminController {
     @PostMapping("/admins")
     public ResponseEntity<?> createAdmin(@Valid @RequestBody NewUserDTO newAdmin) {
         userService.registerAdmin(newAdmin);
+        // Send a message to RabbitMQ using the AmqpTemplate
+        // The message is sent to the "testingExchange" with the routing key "routingUserRegister.key"
+        // The payload of the message is the newAdmin object
+        amqpTemplate.convertAndSend("testingExchanger", "routingUserRegister.key", newAdmin);
         return new ResponseEntity<>("Admin created successfully", HttpStatus.CREATED);
     }
 
     // Update Username and Email - User
     @PatchMapping("/user/{id}")
     public ResponseEntity<?> updateEntityUser(@PathVariable Long id, @Valid @RequestBody UpdateUserDTO updateUser) {
+        // for testing
+        //amqpTemplate.convertAndSend("testingExchange", "routing.key2", id);
         try {
             userService.updateUser(id, updateUser);
             return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
