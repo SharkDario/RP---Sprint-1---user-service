@@ -1,5 +1,7 @@
 package com.mindhub.user_service.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mindhub.user_service.dtos.NewEntityUser;
 import com.mindhub.user_service.dtos.NewUserDTO;
 import com.mindhub.user_service.dtos.UpdateUserDTO;
 import com.mindhub.user_service.dtos.UserDTO;
@@ -7,6 +9,7 @@ import com.mindhub.user_service.models.RoleType;
 import com.mindhub.user_service.services.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +21,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+// Producer
 // We use DTO to receive and send in controllers
 @RestController
 @RequestMapping("/api/admin")
@@ -87,14 +90,15 @@ public class AdminController {
 
     // Create a user
     @PostMapping("/users")
-    public ResponseEntity<?> createUser(@Valid @RequestBody NewUserDTO newUser) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody NewEntityUser newUser) {
         userService.registerUser(newUser);
+        //userService.sendWelcomeEmailAuth(newUser);
         return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
     }
 
     // Create a ADMIN user
     @PostMapping("/admins")
-    public ResponseEntity<?> createAdmin(@Valid @RequestBody NewUserDTO newAdmin) {
+    public ResponseEntity<?> createAdmin(@Valid @RequestBody NewEntityUser newAdmin) {
         userService.registerAdmin(newAdmin);
         return new ResponseEntity<>("Admin created successfully", HttpStatus.CREATED);
     }
@@ -102,6 +106,8 @@ public class AdminController {
     // Update Username and Email - User
     @PatchMapping("/user/{id}")
     public ResponseEntity<?> updateEntityUser(@PathVariable Long id, @Valid @RequestBody UpdateUserDTO updateUser) {
+        // for testing
+        //amqpTemplate.convertAndSend("testingExchange", "routing.key2", id);
         try {
             userService.updateUser(id, updateUser);
             return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
@@ -122,4 +128,10 @@ public class AdminController {
         return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
     }
 
+    // Endpoint to return the userId by the email
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Long> getByEmail(@PathVariable String email) throws EntityNotFoundException {
+        Long userId = userService.getUserDTOByEmail(email).getId();
+        return ResponseEntity.ok(userId);
+    }
 }

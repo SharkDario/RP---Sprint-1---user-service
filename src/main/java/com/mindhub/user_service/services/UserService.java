@@ -1,9 +1,9 @@
 package com.mindhub.user_service.services;
 
-import com.mindhub.user_service.dtos.NewUserDTO;
-import com.mindhub.user_service.dtos.UpdateUserDTO;
-import com.mindhub.user_service.dtos.UserDTO;
+import com.mindhub.user_service.dtos.*;
+import com.mindhub.user_service.exceptions.UserException;
 import com.mindhub.user_service.models.EntityUser;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
@@ -34,4 +34,16 @@ public interface UserService {
     public void validateUser(NewUserDTO newUserDTO);
 
     public boolean existsById(Long id);
+
+    void registerAdmin(NewEntityUser newEntityUser);
+
+    void registerUser(NewEntityUser newEntityUser);
+
+    String loginUser(LoginRequest loginRequest) throws UserException;
+
+    Long getAuthenticatedUserId(Authentication authentication);
+
+    public boolean updateUserPassword(Long id, UpdateUserPasswordDTO updatedPassword);
+
+    void verifyUser(Long id) throws UserException;
 }

@@ -5,12 +5,12 @@ import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 public class EntityUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE) // Lombok doesn't generate the setter
     private Long id;
 
     @Column(unique = true)
@@ -20,6 +20,10 @@ public class EntityUser {
     private String email;
 
     private RoleType role;
+
+    private String password;
+
+    private Status status = Status.PENDING;
 
     public EntityUser(String username, String email, RoleType rol) {
         this.username = username;
@@ -42,6 +46,14 @@ public class EntityUser {
         this.username = username;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -56,6 +68,14 @@ public class EntityUser {
 
     public void setRole(RoleType role) {
         this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

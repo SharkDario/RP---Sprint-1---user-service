@@ -3,6 +3,7 @@ package com.mindhub.user_service.dtos;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mindhub.user_service.models.EntityUser;
 import com.mindhub.user_service.models.RoleType;
+import com.mindhub.user_service.models.Status;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -26,12 +27,18 @@ public class UserDTO {
 
     private RoleType role;
 
+    private String password;
+
+    private Status status;
+
     // Constructor
     public UserDTO(EntityUser entityUser) {
         id = entityUser.getId();
         username = entityUser.getUsername();
         email = entityUser.getEmail();
         role = entityUser.getRole();
+        password = entityUser.getPassword();
+        status = entityUser.getStatus();
     }
 
     public Long getId() {
@@ -50,4 +57,11 @@ public class UserDTO {
         return role;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
 }
